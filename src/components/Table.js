@@ -11,8 +11,9 @@ import MarkdownDialog from './MarkdownDialog';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons';
 import {faGithub, faMarkdown} from '@fortawesome/free-brands-svg-icons';
-import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
 
+const defaultNumRows = 5;
 
 let id = 0;
 
@@ -22,8 +23,31 @@ function createData(name, tags, action) {
 }
 
 const rows = [
-    createData('Frozen yoghurt', ['1', '2', '3', '4'], {type: 'web', href: 'https://www.google.com'}),
-    createData('Ice cream sandwich', ['1', '2', '3', '4'], {type: 'gitHub', href: 'www.google.com'}),
+    createData('Frozen yoghurt', ['Isla', 'Hola', 'Adios', 'Uno mas'], {type: 'web', href: 'https://www.google.com'}),
+    createData('Ice cream sandwich', ['kiik', 'Lorem', 'suite', 'amelo'], {type: 'gitHub', href: 'www.google.com'}),
+    createData('Eclair', ['A', 'B', 'C', 'D'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['AA', 'BB', 'CC', 'DD'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['AAA', 'BBB', 'CCC', 'DDD'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['AAAA', 'BBBB', 'CCCC', 'DDDD'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
+    createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
     createData('Eclair', ['1', '2', '3', '4'], {type: 'markDown', markdownPath: './markdown/README.md'}),
 ];
 
@@ -35,8 +59,44 @@ export default class BetterTable extends React.Component {
             markdownDialogStatus: false,    // To define the status of the dialog (close or open)
             markdownText: "",               // Text of the markdown that will be rendered.
             markdownTitle: "",              // Title of the markdown.
+            numFilteredRows: defaultNumRows,
+            rowsFiltered: rows.slice(0, defaultNumRows),
         };
     }
+
+    handleSearch = inputType => event => {
+        let input = event.target.value;
+        if (input.length >= 2) {
+            let rowsFiltered = this.filterData(input);
+            this.setState({
+                numFilteredRows: rowsFiltered.length,
+                rowsFiltered: rowsFiltered,
+            })
+        } else {
+            this.setState({
+                numFilteredRows: 5,
+                rowsFiltered: rows.slice(0, 5),
+            });
+        }
+    };
+
+    filterData = (input) => {
+        let rowsFiltered = rows.filter((row) => {
+            if(row.name.includes(input) || row.tags.find(a => a.includes(input)) != null){
+                return true;
+            }
+        });
+        console.log(rowsFiltered);
+        return rowsFiltered;
+    };
+
+    /**
+     * Gets the number of filtered rows and total.
+     * @returns {string} "filtered rows / total".
+     */
+    countItemNumber = () => {
+        return this.state.numFilteredRows + '/' + rows.length + " elements";
+    };
 
     /**
      * Handle to open the dialog.
@@ -105,23 +165,22 @@ export default class BetterTable extends React.Component {
     render() {
         return (
             <div className="better-table-container">
+                <Input placeholder="Search"
+                       autoFocus={true}
+                       style={{margin: "1rem", textAlign: "center"}}
+                       onChange={this.handleSearch("search")}
+                />
                 <Paper>
-                    <TextField
-                        id="standard-full-width"
-                        style={{margin: 8}}
-                        placeholder="Filter by tags or elements."
-                        margin="normal"
-                    />
                     <Table>
                         <TableHead>
                             <TableRow>
                                 <TableCell variant={'head'} style={{width: '30%'}}>Element</TableCell>
                                 <TableCell variant={'head'} style={{width: '60%'}}>Tags</TableCell>
-                                <TableCell variant={'head'} style={{width: '10%'}}></TableCell>
+                                <TableCell variant={'head'} style={{width: '10%'}}>{this.countItemNumber()}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map(row => {
+                            {this.state.rowsFiltered.map(row => {
                                 return (
                                     <TableRow key={row.id}>
                                         <TableCell component="th" scope="row">
@@ -146,4 +205,4 @@ export default class BetterTable extends React.Component {
             </div>
         );
     }
-}
+};

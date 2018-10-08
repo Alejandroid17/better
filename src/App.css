@@ -28,5 +28,9 @@
 }
 
 .better-table-container{
-  margin-top: 9rem;
+  margin-top: 4rem;
+}
+
+input{
+    text-align: center;
 }

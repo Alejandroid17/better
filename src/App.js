@@ -9,10 +9,8 @@ class App extends Component {
         return (
             <div className="App">
                 <div className="App-intro">
+                    <div style={{marginTop: "5rem"}}>Extra Effort Today, Saves Pain Tomorrow</div>
                     <Grid container alignItems="center" justify="center">
-                        <Grid item xs={10}>
-                            Title
-                        </Grid>
                         <Grid item xs={10}>
                             <BetterTable/>
                         </Grid>
