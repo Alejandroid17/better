@@ -92,7 +92,8 @@ export default class BetterTable extends React.Component {
      */
     filterData = (input) => {
         let rowsFiltered = rows.filter((row) => {
-            if(row.name.includes(input) || row.tags.find(a => a.includes(input)) != null){
+            var inputLower = input.toLowerCase();
+            if(row.name.toLowerCase().includes(inputLower) || row.tags.find(a => a.toLowerCase().includes(inputLower)) != null){
                 return true;
             }
         });
