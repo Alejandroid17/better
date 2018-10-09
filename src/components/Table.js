@@ -64,6 +64,11 @@ export default class BetterTable extends React.Component {
         };
     }
 
+    /**
+     * On `change` event, the rows are filtered and the status is updated.
+     * @param inputType: type of input.
+     * @param event: event launched.
+     */
     handleSearch = inputType => event => {
         let input = event.target.value;
         if (input.length >= 2) {
@@ -80,13 +85,17 @@ export default class BetterTable extends React.Component {
         }
     };
 
+    /**
+     * Filters the rows by name or tags.
+     * @param input: string by which to filter the search.
+     * @returns {*[]}: list of rows filtered.
+     */
     filterData = (input) => {
         let rowsFiltered = rows.filter((row) => {
             if(row.name.includes(input) || row.tags.find(a => a.includes(input)) != null){
                 return true;
             }
         });
-        console.log(rowsFiltered);
         return rowsFiltered;
     };
 
