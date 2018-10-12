@@ -1,36 +1,64 @@
+
+@font-face {
+    font-family: "Majestika";
+    src: url("./media/font/Majestika.ttf");
+}
+
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 100px;
-  padding: 20px;
-  color: white;
+    background-color: #222;
+    height: 100px;
+    padding: 20px;
+    color: white;
 }
 
 .App-title {
-  font-size: 2.6em;
+    font-size: 2.6em;
 }
 
 .App-intro {
-  font-size: large;
+    font-size: large;
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.better-table-container{
-  margin-top: 4rem;
+.better-table-container {
+    margin-top: 4rem;
 }
 
-input{
+input {
     text-align: center;
+}
+
+body {
+    background-size: cover;
+    background-position: 0 0;
+    background-attachment: fixed;
+    background-image: url('./media/images/wallpaper1.jpg');
+}
+
+.principal-title{
+    margin-top: 6rem;
+    font-family: Majestika;
+    font-size: 5rem;
+    font-weight: 300;
+}
+
+div[class*="MuiDialog-paperFullScreen-"]{
+    background-image: url('./media/images/wallpaper2.jpg');
 }
