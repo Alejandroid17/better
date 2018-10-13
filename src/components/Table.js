@@ -21,7 +21,8 @@ export default class BetterTable extends React.Component {
         super(props);
         this.state = {
             markdownDialogStatus: false,                                 // To define the status of the dialog (close or open).
-            markdownText: "",                                            // Text of the markdown that will be rendered.
+            markdownHTML: "",
+            markdownLoaded: false,
             markdownTitle: "",                                           // Title of the markdown.
             numFilteredRows: defaultNumRows,                             // Number of rows filtered.
             rowsFiltered: this.props.elements.slice(0, defaultNumRows),  // Filtered rows.
@@ -91,14 +92,33 @@ export default class BetterTable extends React.Component {
      * When the dialog is opened, the markdown file is read.
      */
     handleOpenDialog = (row) => {
+        const gitUrl = "https://api.github.com/markdown";
+
+        // Open the dialog...
+        this.setState({
+            markdownDialogStatus: true,
+            markdownTitle: row.name,
+        });
+
+        // Read the markdown file...
         fetch(row.action.markdownPath)
             .then(res => res.text())
             .then((result) => {
-                    this.setState({
-                        markdownDialogStatus: true,
-                        markdownText: result,
-                        markdownTitle: row.name,
-                    })
+                    fetch(gitUrl, {
+                        method: 'post',
+                        headers: {'Content-Type': 'text/plain'},
+                        body: JSON.stringify({
+                            "text": result,
+                            "mode": "gfm",
+                        })
+                    }).then((response) => {
+                        return response.text();
+                    }).then((data) => {
+                        this.setState({
+                            markdownHTML: data.replace(/\n/g, ''),
+                            markdownLoaded: true,
+                        });
+                    });
                 }
             );
     };
@@ -110,6 +130,9 @@ export default class BetterTable extends React.Component {
     handleCloseDialog = () => {
         this.setState({
             markdownDialogStatus: false,
+            markdownLoaded: false,
+            markdownHTML: "",
+            markdownTitle: "",
         });
     };
 
@@ -205,7 +228,8 @@ export default class BetterTable extends React.Component {
                     />
                 </Paper>
                 <MarkdownDialog open={this.state.markdownDialogStatus}
-                                markdownText={this.state.markdownText}
+                                loaded={this.state.markdownLoaded}
+                                markdownHTML={this.state.markdownHTML}
                                 title={this.state.markdownTitle}
                                 onClose={this.handleCloseDialog}/>
             </div>

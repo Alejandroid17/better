@@ -11,7 +11,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimesCircle} from '@fortawesome/free-solid-svg-icons/index';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import ReactMarkdown from 'react-markdown';
+import renderHTML from 'react-render-html';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const styles = {
     appBar: {
@@ -33,9 +34,8 @@ class FullScreenDialog extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            error: null,
-            isMarkdownLoaded: false,
             markdownText: null,
+            markdownHtml: null,
         };
     }
 
@@ -44,6 +44,22 @@ class FullScreenDialog extends React.Component {
      */
     handleClose = () => {
         this.props.onClose()
+    };
+
+    /**
+     * Check if the markdown is ready, if it is not already displayed a loading spinner.
+     */
+    isLoaded = () => {
+        if (this.props.loaded) {
+            return renderHTML(this.props.markdownHTML)
+        }
+        return <div className={"spinner"} style={{textAlign: "center"}}>
+            <ClipLoader
+                sizeUnit={"px"}
+                size={150}
+                color={"#123abc"}
+            />
+        </div>
     };
 
     render() {
@@ -66,10 +82,13 @@ class FullScreenDialog extends React.Component {
                             </IconButton>
                         </Toolbar>
                     </AppBar>
-                    <div style={{marginTop: "1%"}}>
+                    <div style={{marginTop: "2rem"}}>
                         <Grid container direction="row" justify="center" alignItems="center">
-                            <Paper style={{padding: "5rem 5rem 5rem 5rem", width: "55rem", opacity:0.95}} elevation={24}>
-                                <ReactMarkdown source={this.props.markdownText}/>
+                            <Paper style={{padding: "5rem 5rem 5rem 5rem", width: "55rem", opacity: 0.95, minHeight: "10rem"}}
+                                   elevation={24}>
+                                <div>
+                                    {this.isLoaded()}
+                                </div>
                             </Paper>
                         </Grid>
                     </div>

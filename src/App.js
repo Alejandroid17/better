@@ -3,6 +3,20 @@ import './App.css';
 import Grid from '@material-ui/core/Grid';
 import BetterTable from './components/Table';
 
+function Info(author, gitHub, repository) {
+    this.author = author;
+    this.gitHub = gitHub;
+    this.repository = repository;
+}
+
+function showInfo() {
+    var me = new Info("Alejandroid17", "https://github.com/Alejandroid17", "https://github.com/Alejandroid17/better");
+    console.table(me);
+}
+
+// Call to show the console log table.
+showInfo();
+
 class App extends Component {
     render() {
         return (
@@ -22,25 +36,44 @@ class App extends Component {
 export default App;
 
 
-
 let id = 0;
+
 function createData(name, tags, action) {
     id += 1;
     return {id, name, tags, action};
 }
 
+/**
+ * DATAS
+ *
+ * Markdown => {
+ *                  name: 'name',
+ *                  tags: ['tag1', 'tag2,],
+ *                  button: {type: 'markDown', markdownPath: './...'}
+ *             }
+ *
+ * Web => {
+ *              name: 'name',
+ *              tags: ['tag1', 'tag2,],
+ *              button: {type: 'web', href: 'https://...'}
+ *        }
+ *
+ * GitHub => {
+ *              name: 'name',
+ *              tags: ['tag1', 'tag2,],
+ *              button: {type: 'gitHub', href: 'https://...'}
+ *           }
+ *
+ */
+
 var datas = [
-    {name: 'Frozen yoghurt', tags: ['Isla', 'Hola', 'Adios', 'Uno mas'], button: {type: 'markDown', markdownPath: './markdown/README.md'}},
-    {name: 'Frozen yoghurt', tags: ['Isla', 'Hola', 'Adios', 'Uno mas'], button: {type: 'web', href: 'https://www.google.com'}},
-    {name: 'Frozen yoghurt', tags: ['Isla', 'Hola', 'Adios', 'Uno mas'], button: {type: 'web', href: 'https://www.google.com'}},
-    {name: 'Frozen yoghurt', tags: ['Isla', 'Hola', 'Adios', 'Uno mas'], button: {type: 'web', href: 'https://www.google.com'}},
-    {name: 'Frozen yoghurt', tags: ['Isla', 'Hola', 'Adios', 'Uno mas'], button: {type: 'web', href: 'https://www.google.com'}},
-    {name: 'Frozen yoghurt', tags: ['Isla', 'Hola', 'Adios', 'Uno mas'], button: {type: 'web', href: 'https://www.google.com'}},
-    {name: 'Frozen yoghurt', tags: ['Isla', 'Hola', 'Adios', 'Uno mas'], button: {type: 'web', href: 'https://www.google.com'}},
-    {name: 'Frozen yoghurt', tags: ['Isla', 'Hola', 'Adios', 'Uno mas'], button: {type: 'web', href: 'https://www.google.com'}},
-    {name: 'Frozen yoghurt', tags: ['Isla', 'Hola', 'Adios', 'Uno mas'], button: {type: 'web', href: 'https://www.google.com'}},
+    {
+        name: 'GitHub Flavored Markdown Spec',
+        tags: ['GitHub', 'Markdown'],
+        button: {type: 'web', href: 'https://github.github.com/gfm/'}
+    },
 ];
 
 const elements = datas.map((data, index) => {
-   return createData(data.name, data.tags, data.button);
+    return createData(data.name, data.tags, data.button);
 });
