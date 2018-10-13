@@ -10,23 +10,23 @@ import Button from '@material-ui/core/Button';
 import MarkdownDialog from './MarkdownDialog';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faGlobe} from '@fortawesome/free-solid-svg-icons';
-import {faGithub, faMarkdown} from '@fortawesome/free-brands-svg-icons';
+import {faGithub, faMarkdown, faMedium} from '@fortawesome/free-brands-svg-icons';
 import Input from '@material-ui/core/Input';
 import TablePagination from '@material-ui/core/TablePagination';
 
-const defaultNumRows = 6;
+const defaultNumRows = 8;
 
 export default class BetterTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            markdownDialogStatus: false,                                 // To define the status of the dialog (close or open).
-            markdownHTML: "",
-            markdownLoaded: false,
-            markdownTitle: "",                                           // Title of the markdown.
-            numFilteredRows: defaultNumRows,                             // Number of rows filtered.
-            rowsFiltered: this.props.elements.slice(0, defaultNumRows),  // Filtered rows.
-            currentPage: 0,                                              // Current page.
+            markdownDialogStatus: false,                    // To define the status of the dialog (close or open).
+            markdownHTML: "",                               // Markdown HTML to render.
+            markdownLoaded: false,                          // Flag to know if the markdown is loaded or not.
+            markdownTitle: "",                              // Title of the markdown.
+            numFilteredRows: this.props.elements.length,    // Number of rows filtered.
+            rowsFiltered: this.props.elements,              // Filtered rows.
+            currentPage: 0,                                 // Current page.
         };
     }
 
@@ -38,7 +38,6 @@ export default class BetterTable extends React.Component {
     handleChangePage = (event, pageNumber) => {
         this.setState({
             currentPage: pageNumber,
-            rowsFiltered: this.props.elements.slice((defaultNumRows) * pageNumber, defaultNumRows * pageNumber + defaultNumRows)
         });
     };
 
@@ -57,8 +56,8 @@ export default class BetterTable extends React.Component {
             })
         } else {
             this.setState({
-                numFilteredRows: defaultNumRows,
-                rowsFiltered: this.props.elements.slice(0, defaultNumRows),
+                numFilteredRows: this.props.elements.length,
+                rowsFiltered: this.props.elements,
             });
         }
     };
@@ -77,14 +76,6 @@ export default class BetterTable extends React.Component {
             return;
         });
         return rowsFiltered;
-    };
-
-    /**
-     * Gets the number of filtered rows and total.
-     * @returns {string} "filtered rows / total".
-     */
-    countItemNumber = () => {
-        return this.state.numFilteredRows + '/' + this.props.elements.length + " elements";
     };
 
     /**
@@ -174,13 +165,17 @@ export default class BetterTable extends React.Component {
                                onClick={() => this.handleOpenDialog(row)}>
                     <FontAwesomeIcon icon={faMarkdown} size={'2x'}/>
                 </Button>;
+            case "medium":
+                return <Button variant="contained" href={row.action.href} target="_blank">
+                    <FontAwesomeIcon icon={faMedium} size={'2x'}/>
+                </Button>;
             default:
                 return ""
         }
     };
 
-
     render() {
+        var currentPage = this.state.currentPage;
         return (
             <div className="better-table-container">
                 <Input placeholder="Search"
@@ -200,7 +195,7 @@ export default class BetterTable extends React.Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.state.rowsFiltered.map(row => {
+                            {this.state.rowsFiltered.slice(defaultNumRows * currentPage, defaultNumRows * currentPage + defaultNumRows).map(row => {
                                 return (
                                     <TableRow key={row.id}>
                                         <TableCell component="th" scope="row" style={{fontSize: "1rem"}}>
@@ -219,7 +214,7 @@ export default class BetterTable extends React.Component {
                     </Table>
                     <TablePagination
                         component="div"
-                        count={this.props.elements.length}
+                        count={this.state.numFilteredRows}
                         rowsPerPage={defaultNumRows}
                         page={this.state.currentPage}
                         labelRowsPerPage={''}

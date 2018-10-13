@@ -68,10 +68,51 @@ function createData(name, tags, action) {
 
 var datas = [
     {
-        name: 'GitHub Flavored Markdown Spec',
+        name: 'GitHud Flavored Markdown Spec',
         tags: ['GitHub', 'Markdown'],
         button: {type: 'web', href: 'https://github.github.com/gfm/'}
     },
+    {
+        name: 'Semantic Commit Messages',
+        tags: ['Semantic', 'Commit', 'Git'],
+        button: {type: 'web', href: 'https://seesparkbox.com/foundry/semantic_commit_messages'}
+    },
+    {
+        name: 'Django Snippets',
+        tags: ['Django', 'Snippets', 'Python', 'Collaborative'],
+        button: {type: 'web', href: 'https://djangosnippets.org/'}
+    },
+    {
+        name: 'Coolors',
+        tags: ['Colors', 'HTML', 'Template', 'Hexadecimal'],
+        button: {type: 'web', href: 'https://coolors.co/app'}
+    },
+    {
+        name: 'HackMD',
+        tags: ['Markdown', 'Documentation', 'GitHub'],
+        button: {type: 'web', href: 'https://hackmd.io/'}
+    },
+    {
+        name: 'Codrops',
+        tags: ['Styles', 'CSS', 'Efects', 'Tutorials', 'Design', 'Collaborative'],
+        button: {type: 'web', href: 'https://tympanus.net/codrops/'}
+    },
+    {
+        name: 'Design notes',
+        tags: ['Design', 'Collaborative', 'Library'],
+        button: {type: 'web', href: 'https://www.designnotes.co/'}
+    },
+    {
+        name: 'Brusher',
+        tags: ['JavaScript', 'Paint', 'Wallpaper'],
+        button: {type: 'gitHub', href: 'https://github.com/kamranahmedse/brusher/'}
+    },
+        {
+        name: 'React & GitHub-Pages',
+        tags: ['React', 'GitHub-Pages', 'Static', 'Web'],
+        button: {type: 'medium', href: 'https://codeburst.io/deploy-react-to-github-pages-to-create-an-amazing-website-42d8b09cd4d'}
+    },
+
 ];
 
 const elements = datas.map((data, index) => {
