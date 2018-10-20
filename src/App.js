@@ -107,12 +107,26 @@ var datas = [
         tags: ['JavaScript', 'Paint', 'Wallpaper'],
         button: {type: 'gitHub', href: 'https://github.com/kamranahmedse/brusher/'}
     },
-        {
+    {
         name: 'React & GitHub-Pages',
         tags: ['React', 'GitHub-Pages', 'Static', 'Web'],
         button: {type: 'medium', href: 'https://codeburst.io/deploy-react-to-github-pages-to-create-an-amazing-website-42d8b09cd4d'}
     },
-
+    {
+        name: 'Codewars',
+        tags: ['Challenges', 'Code', 'Competition', 'Game'],
+        button: {type: 'web', href: 'https://www.codewars.com/'}
+    },
+    {
+        name: 'Overthewire',
+        tags: ['Challenges', 'Competition', 'Security', 'Game'],
+        button: {type: 'web', href: 'http://overthewire.org/wargames/'}
+    },
+    {
+        name: 'The silver searcher',
+        tags: ['grep', 'search', 'fast', 'filter'],
+        button: {type: 'gitHub', href: 'https://github.com/ggreer/the_silver_searcher'}
+    },
 ];
 
 const elements = datas.map((data, index) => {
