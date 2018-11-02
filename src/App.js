@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './App.css';
 import Grid from '@material-ui/core/Grid';
 import BetterTable from './components/Table';
+import BeatLoader from 'react-spinners/BeatLoader';
+
 
 function Info(author, gitHub, repository) {
     this.author = author;
@@ -14,17 +16,65 @@ function showInfo() {
     console.table(me);
 }
 
+
 // Call to show the console log table.
 showInfo();
 
-class App extends Component {
+
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            elements: [],
+            loaded: false,
+        };
+
+        this.readData();
+    }
+
+    /**
+     * Read the data of a data.json file and prepare the elements to show in the table.
+     */
+    readData = () => {
+        fetch("./data.json")
+            .then(res => res.json())
+            .then((result) => {
+                    var elements = result.data.map((data, index) => {
+                        return createData(data.name, data.tags, data.button);
+                    });
+                    this.setState({
+                        elements: elements,
+                        loaded: true,
+                    });
+                }
+            );
+    };
+
+    /**
+     * Render the table is the datas are prepared, otherwise show a loading spinner.
+     */
+    renderOrLoad = () => {
+        if (this.state.loaded) {
+            return <BetterTable elements={this.state.elements}/>
+        }
+        return <div style={{marginTop: "20rem"}}>
+            <BeatLoader
+                sizeUnit={"px"}
+                size={110}
+                margin={"55px"}
+                color={'#12bc8d'}
+                loading={!this.state.loaded}
+            />
+        </div>
+    };
+
     render() {
         return (
             <div className="App">
                 <div className="App-intro">
                     <Grid container alignItems="center" justify="center">
                         <Grid item xs={10}>
-                            <BetterTable elements={elements}/>
+                            {this.renderOrLoad()}
                         </Grid>
                     </Grid>
                 </div>
@@ -44,7 +94,7 @@ function createData(name, tags, action) {
 }
 
 /**
- * DATAS
+ * Structure of the data
  *
  * Markdown => {
  *                  name: 'name',
@@ -65,70 +115,3 @@ function createData(name, tags, action) {
  *           }
  *
  */
-
-var datas = [
-    {
-        name: 'GitHud Flavored Markdown Spec',
-        tags: ['GitHub', 'Markdown'],
-        button: {type: 'web', href: 'https://github.github.com/gfm/'}
-    },
-    {
-        name: 'Semantic Commit Messages',
-        tags: ['Semantic', 'Commit', 'Git'],
-        button: {type: 'web', href: 'https://seesparkbox.com/foundry/semantic_commit_messages'}
-    },
-    {
-        name: 'Django Snippets',
-        tags: ['Django', 'Snippets', 'Python', 'Collaborative'],
-        button: {type: 'web', href: 'https://djangosnippets.org/'}
-    },
-    {
-        name: 'Coolors',
-        tags: ['Colors', 'HTML', 'Template', 'Hexadecimal'],
-        button: {type: 'web', href: 'https://coolors.co/app'}
-    },
-    {
-        name: 'HackMD',
-        tags: ['Markdown', 'Documentation', 'GitHub'],
-        button: {type: 'web', href: 'https://hackmd.io/'}
-    },
-    {
-        name: 'Codrops',
-        tags: ['Styles', 'CSS', 'Efects', 'Tutorials', 'Design', 'Collaborative'],
-        button: {type: 'web', href: 'https://tympanus.net/codrops/'}
-    },
-    {
-        name: 'Design notes',
-        tags: ['Design', 'Collaborative', 'Library'],
-        button: {type: 'web', href: 'https://www.designnotes.co/'}
-    },
-    {
-        name: 'Brusher',
-        tags: ['JavaScript', 'Paint', 'Wallpaper'],
-        button: {type: 'gitHub', href: 'https://github.com/kamranahmedse/brusher/'}
-    },
-    {
-        name: 'React & GitHub-Pages',
-        tags: ['React', 'GitHub-Pages', 'Static', 'Web'],
-        button: {type: 'medium', href: 'https://codeburst.io/deploy-react-to-github-pages-to-create-an-amazing-website-42d8b09cd4d'}
-    },
-    {
-        name: 'Codewars',
-        tags: ['Challenges', 'Code', 'Competition', 'Game'],
-        button: {type: 'web', href: 'https://www.codewars.com/'}
-    },
-    {
-        name: 'Overthewire',
-        tags: ['Challenges', 'Competition', 'Security', 'Game'],
-        button: {type: 'web', href: 'http://overthewire.org/wargames/'}
-    },
-    {
-        name: 'The silver searcher',
-        tags: ['grep', 'search', 'fast', 'filter'],
-        button: {type: 'gitHub', href: 'https://github.com/ggreer/the_silver_searcher'}
-    },
-];
-
-const elements = datas.map((data, index) => {
-    return createData(data.name, data.tags, data.button);
-});

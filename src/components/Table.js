@@ -28,6 +28,8 @@ export default class BetterTable extends React.Component {
             rowsFiltered: this.props.elements,              // Filtered rows.
             currentPage: 0,                                 // Current page.
         };
+
+        console.log(this.props.elements)
     }
 
     /**
