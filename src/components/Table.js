@@ -113,8 +113,6 @@ export default class BetterTable extends React.Component {
                             });
                         });
                     } else { // If the type is "markdowm html" ...
-                        console.log(row);
-                        console.log(result);
                         this.setState({
                             markdownHTML: result,
                             markdownLoaded: true,
