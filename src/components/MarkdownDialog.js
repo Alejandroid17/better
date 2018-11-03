@@ -22,6 +22,7 @@ const styles = {
     flex: {
         flex: 1,
         textAlign: "center",
+        fontSize: "2rem",
     },
 };
 
@@ -84,7 +85,7 @@ class FullScreenDialog extends React.Component {
                     </AppBar>
                     <div style={{marginTop: "2rem"}}>
                         <Grid container direction="row" justify="center" alignItems="center">
-                            <Paper style={{padding: "5rem 5rem 5rem 5rem", width: "55rem", opacity: 0.95, minHeight: "10rem"}}
+                            <Paper style={{padding: "5rem 5rem 5rem 5rem", width: this.props.paperWidth, opacity: 0.95, minHeight: "10rem"}}
                                    elevation={24}>
                                 <div>
                                     {this.isLoaded()}

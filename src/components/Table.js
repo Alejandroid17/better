@@ -28,8 +28,6 @@ export default class BetterTable extends React.Component {
             rowsFiltered: this.props.elements,              // Filtered rows.
             currentPage: 0,                                 // Current page.
         };
-
-        console.log(this.props.elements)
     }
 
     /**
@@ -97,21 +95,33 @@ export default class BetterTable extends React.Component {
         fetch(row.action.markdownPath)
             .then(res => res.text())
             .then((result) => {
-                    fetch(gitUrl, {
-                        method: 'post',
-                        headers: {'Content-Type': 'text/plain'},
-                        body: JSON.stringify({
-                            "text": result,
-                            "mode": "gfm",
-                        })
-                    }).then((response) => {
-                        return response.text();
-                    }).then((data) => {
-                        this.setState({
-                            markdownHTML: data.replace(/\n/g, ''),
-                            markdownLoaded: true,
+                    if (row.action.type == "markDown") { // If the type is "markdown" ...
+                        fetch(gitUrl, {
+                            method: 'post',
+                            headers: {'Content-Type': 'text/plain'},
+                            body: JSON.stringify({
+                                "text": result,
+                                "mode": "gfm",
+                            })
+                        }).then((response) => {
+                            return response.text();
+                        }).then((data) => {
+                            this.setState({
+                                markdownHTML: data.replace(/\n/g, ''),
+                                markdownLoaded: true,
+                                paperWidth: "55rem",
+                            });
                         });
-                    });
+                    } else { // If the type is "markdowm html" ...
+                        console.log(row);
+                        console.log(result);
+                        this.setState({
+                            markdownHTML: result,
+                            markdownLoaded: true,
+                            paperWidth: "110rem",
+                        });
+                    }
+
                 }
             );
     };
@@ -148,7 +158,7 @@ export default class BetterTable extends React.Component {
     };
 
     /**
-     * Renders the differents buttons in the table. Each button has differents actions.
+     * Renders the different buttons in the table. Each button has different actions.
      * @param row: row active.
      * @returns: button (component)
      */
@@ -163,13 +173,16 @@ export default class BetterTable extends React.Component {
                     <FontAwesomeIcon icon={faGithub} size={'2x'}/>
                 </Button>;
             case "markDown":
-                return <Button variant="contained"
-                               onClick={() => this.handleOpenDialog(row)}>
+                return <Button variant="contained" onClick={() => this.handleOpenDialog(row)}>
                     <FontAwesomeIcon icon={faMarkdown} size={'2x'}/>
                 </Button>;
             case "medium":
                 return <Button variant="contained" href={row.action.href} target="_blank">
                     <FontAwesomeIcon icon={faMedium} size={'2x'}/>
+                </Button>;
+            case "markDownHtml":
+                return <Button variant="contained" onClick={() => this.handleOpenDialog(row)}>
+                    <FontAwesomeIcon icon={faMarkdown} size={'2x'}/>
                 </Button>;
             default:
                 return ""
@@ -228,6 +241,7 @@ export default class BetterTable extends React.Component {
                                 loaded={this.state.markdownLoaded}
                                 markdownHTML={this.state.markdownHTML}
                                 title={this.state.markdownTitle}
+                                paperWidth={this.state.paperWidth}
                                 onClose={this.handleCloseDialog}/>
             </div>
         );

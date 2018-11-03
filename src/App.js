@@ -28,7 +28,6 @@ class App extends React.Component {
             elements: [],
             loaded: false,
         };
-
         this.readData();
     }
 
