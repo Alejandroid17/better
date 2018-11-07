@@ -85,13 +85,7 @@ export default class BetterTable extends React.Component {
     handleOpenDialog = (row) => {
         const gitUrl = "https://api.github.com/markdown";
 
-        // Open the dialog...
-        this.setState({
-            markdownDialogStatus: true,
-            markdownTitle: row.name,
-        });
-
-        // Read the markdown file...
+        // Read the markdown file... and open the modal...
         fetch(row.action.markdownPath)
             .then(res => res.text())
             .then((result) => {
@@ -110,6 +104,8 @@ export default class BetterTable extends React.Component {
                                 markdownHTML: data.replace(/\n/g, ''),
                                 markdownLoaded: true,
                                 paperWidth: "55rem",
+                                markdownDialogStatus: true,
+                                markdownTitle: row.name,
                             });
                         });
                     } else { // If the type is "markdowm html" ...
@@ -117,6 +113,8 @@ export default class BetterTable extends React.Component {
                             markdownHTML: result,
                             markdownLoaded: true,
                             paperWidth: "110rem",
+                            markdownDialogStatus: true,
+                            markdownTitle: row.name,
                         });
                     }
 
@@ -131,7 +129,6 @@ export default class BetterTable extends React.Component {
     handleCloseDialog = () => {
         this.setState({
             markdownDialogStatus: false,
-            markdownLoaded: false,
             markdownHTML: "",
             markdownTitle: "",
         });

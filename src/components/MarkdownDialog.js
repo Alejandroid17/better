@@ -17,7 +17,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 const styles = {
     appBar: {
         position: 'relative',
-        backgroundColor: '#a261c052',
+        backgroundColor: '#4a464c',
     },
     flex: {
         flex: 1,
@@ -47,22 +47,6 @@ class FullScreenDialog extends React.Component {
         this.props.onClose()
     };
 
-    /**
-     * Check if the markdown is ready, if it is not already displayed a loading spinner.
-     */
-    isLoaded = () => {
-        if (this.props.loaded) {
-            return renderHTML(this.props.markdownHTML)
-        }
-        return <div className={"spinner"} style={{textAlign: "center"}}>
-            <ClipLoader
-                sizeUnit={"px"}
-                size={150}
-                color={"#123abc"}
-            />
-        </div>
-    };
-
     render() {
         const {classes} = this.props;
         return (
@@ -85,10 +69,10 @@ class FullScreenDialog extends React.Component {
                     </AppBar>
                     <div style={{marginTop: "2rem"}}>
                         <Grid container direction="row" justify="center" alignItems="center">
-                            <Paper style={{padding: "5rem 5rem 5rem 5rem", width: this.props.paperWidth, opacity: 0.95, minHeight: "10rem"}}
+                            <Paper style={{padding: "5rem 5rem 5rem 5rem", opacity: 0.95, minHeight: "10rem"}}
                                    elevation={24}>
                                 <div>
-                                    {this.isLoaded()}
+                                    {renderHTML(this.props.markdownHTML)}
                                 </div>
                             </Paper>
                         </Grid>
