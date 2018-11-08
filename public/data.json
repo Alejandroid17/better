@@ -156,6 +156,26 @@
       "name": "List of Docker Utilities",
       "tags": ["docker", "commands"],
       "button": {"type": "markDownHtml", "markdownPath": "./markdownhtml/List of Docker utilities.html"}
+    },
+    {
+      "name": "Animate.css",
+      "tags": ["style", "animate", "css", "js"],
+      "button": {"type": "web", "href": "https://daneden.github.io/animate.css/"}
+    },
+    {
+      "name": "Cookiecutter",
+      "tags": ["fast", "template", "create", "automatic"],
+      "button": {"type": "gitHub", "href": "https://github.com/audreyr/cookiecutter"}
+    },
+    {
+      "name": "gotop",
+      "tags": ["terminal", "interface", "top"],
+      "button": {"type": "gitHub", "href": "https://github.com/cjbassi/gotop"}
+    },
+    {
+      "name": "Oh my zsh",
+      "tags": ["terminal", "interface"],
+      "button": {"type": "web", "href": "https://ohmyz.sh/"}
     }
   ]
 }
