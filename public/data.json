@@ -176,6 +176,12 @@
       "name": "Oh my zsh",
       "tags": ["terminal", "interface"],
       "button": {"type": "web", "href": "https://ohmyz.sh/"}
+    },
+    {
+      "name": "choo.io",
+      "tags": ["framework", "frontend", "minimal", "size"],
+      "button": {"type": "web", "href": "https://ohmyz.sh/"}
     }
+
   ]
 }
