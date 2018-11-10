@@ -207,8 +207,8 @@ export default class BetterTable extends React.Component {
                         <TableBody>
                             {this.state.rowsFiltered.slice(defaultNumRows * currentPage, defaultNumRows * currentPage + defaultNumRows).map(row => {
                                 return (
-                                    <TableRow key={row.id}>
-                                        <TableCell component="th" scope="row" style={{fontSize: "1rem"}}>
+                                    <TableRow key={row.id} className={'values-tr'}>
+                                        <TableCell style={{fontSize: "1.2rem", fontWeight:"bold"}}>
                                             {row.name}
                                         </TableCell>
                                         <TableCell>
