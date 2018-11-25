@@ -181,7 +181,26 @@
       "name": "choo.io",
       "tags": ["framework", "frontend", "minimal", "size"],
       "button": {"type": "web", "href": "https://ohmyz.sh/"}
+    },
+    {
+      "name": "Hack the box",
+      "tags": ["Hack", "Challenges", "Competition"],
+      "button": {"type": "web", "href": "https://www.hackthebox.eu"}
+    },
+    {
+      "name": "bat",
+      "tags": ["editor", "vim", "terminal"],
+      "button": {"type": "gitHub", "href": "https://github.com/sharkdp/bat"}
+    },
+    {
+      "name": "free-for-dev",
+      "tags": ["services", "software", "Devops"],
+      "button": {"type": "gitHub", "href": "https://github.com/ripienaar/free-for-dev#analytics-events-and-statistics"}
+    },
+    {
+      "name": "bat",
+      "tags": ["editor", "vim", "terminal"],
+      "button": {"type": "gitHub", "href": ""}
     }
-
   ]
 }
